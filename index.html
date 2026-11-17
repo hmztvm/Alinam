@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Sənə ❤️</title>
+<title>Alinama ❤️</title>
 <style>
 :root{--bg1:#1a0414;--bg2:#3d0a2e;--rose:#ff4d8d;--gold:#ffd6e7;--text:#fff0f6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box}
@@ -30,10 +30,7 @@ h1{margin:0 0 14px;font-size:30px;font-weight:normal;font-style:italic;backgroun
 #row{min-height:70px;display:flex;justify-content:center;align-items:center;flex-wrap:wrap}
 #music{text-decoration:none;position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);right:12px;z-index:5;background:rgba(255,255,255,.12);border:1px solid rgba(255,182,213,.4);color:#fff;border-radius:50px;padding:8px 14px;font-size:15px;cursor:pointer}
 #p3 .card{overflow:visible}
-#vid{position:fixed;left:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 12px);width:92px;height:128px;z-index:6;border-radius:18px;overflow:hidden;border:2px solid rgba(255,182,213,.7);box-shadow:0 0 25px rgba(255,77,141,.7);cursor:pointer;background:#000;transition:all .6s cubic-bezier(.3,1.3,.5,1);animation:pulse 2.4s infinite}
-#vid video{width:100%;height:100%;object-fit:cover;display:block}
-#vid.big{width:min(78vw,340px);height:min(60vh,440px);left:50%;bottom:50%;transform:translate(-50%,50%);animation:none;z-index:9}
-#vh{position:absolute;bottom:4px;left:0;right:0;text-align:center;font-size:11px;font-family:sans-serif;color:#fff;text-shadow:0 0 4px #000}
+
 </style>
 </head>
 <body>
@@ -59,12 +56,11 @@ h1{margin:0 0 14px;font-size:30px;font-weight:normal;font-style:italic;backgroun
 </div>
 </div></div>
 
-<div id="vid"><video id="vv" src="video.mp4" muted loop autoplay playsinline></video><span id="vh">▶ toxun</span></div>
 
 <script>
 // ====== BURANI DƏYİŞ: WhatsApp nömrən (ölkə kodu ilə, + və boşluqsuz). Məs: 994501234567 ======
-var PHONE = "994XXXXXXXXX";
-var MSG = "Salam sevgilim ❤️ Mesajını oxudum, sənə şans verirəm. Gəl danışaq, hər şeyi birlikdə düzəldək. Mən də səni çox sevirəm 🥹💖";
+var PHONE = "994507375069";
+var MSG = "❤️ Mesajını oxudum, sənə şans verirəm. Gəl danışaq, hər şeyi birlikdə düzəldək. 🥹💖";
 
 var T = [
 "Alinam bu vaxta kimi çox səhvlər eləmişəm və çox peşmanam həddindən artıq çox peşmanam. Sənsiz yaşadığım günlər işgəncə olub mənə həmişə yazım demişəm ama elədiyim qələtdi də bilirdim. Sənə həyatım boyu yalan deməmişəm nə olubsa demişəm çünki aramızdakı güvənin itməsinə icazə verməzdim. Bu bir ildə çox qələtlər eləmişəm və çoxda peşmanam ama bildiyim tək şey səni dəli kimi sevdiyimdi.",
@@ -145,17 +141,6 @@ function playSong(){var p=song.play();if(p&&p.then)p.then(function(){playing=tru
 ['pointerdown','touchstart','keydown'].forEach(function(ev){addEventListener(ev,function f(){playSong();removeEventListener(ev,f)},{passive:true})});
 $('music').onclick=function(e){e.stopPropagation();if(song.paused){playSong()}else{song.pause();playing=false;$('music').textContent='🔇'}};
 
-// ---------- video (video.mp4 faylı) ----------
-var vid=$('vid'),vv=$('vv');
-vv.addEventListener('error',function(){vid.style.display='none'});
-vid.onclick=function(e){
-  e.stopPropagation();
-  var big=vid.classList.toggle('big');
-  vv.muted=!big; vv.currentTime=big?0:vv.currentTime;
-  $('vh').style.display=big?'none':'block';
-  if(big){song.pause()}else{playSong()}
-  vv.play();
-};
 </script>
 </body>
 </html>
