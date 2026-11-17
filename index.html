@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sənə ❤️</title>
+<style>
+:root{--bg1:#1a0414;--bg2:#3d0a2e;--rose:#ff4d8d;--gold:#ffd6e7;--text:#fff0f6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:radial-gradient(circle at 50% 20%,var(--bg2),var(--bg1) 70%);color:var(--text);font-family:Georgia,'Times New Roman',serif;overflow:hidden}
+canvas{position:fixed;inset:0;width:100%;height:100%;z-index:0}
+.page{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:18px;opacity:0;pointer-events:none;transform:scale(.92);filter:blur(12px);transition:all 1.2s ease;z-index:2}
+.page.on{opacity:1;pointer-events:auto;transform:scale(1);filter:blur(0)}
+.card{width:100%;max-width:560px;max-height:88vh;overflow-y:auto;padding:26px 22px;border-radius:26px;background:rgba(255,255,255,.07);border:1px solid rgba(255,182,213,.35);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 0 50px rgba(255,77,141,.35),inset 0 0 30px rgba(255,255,255,.05);text-align:center;animation:glow 4s ease-in-out infinite}
+@keyframes glow{50%{box-shadow:0 0 80px rgba(255,77,141,.6),inset 0 0 40px rgba(255,255,255,.08)}}
+h1{margin:0 0 14px;font-size:30px;font-weight:normal;font-style:italic;background:linear-gradient(90deg,#ff9ac1,#fff,#ff4d8d,#fff,#ff9ac1);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 6s linear infinite}
+@keyframes shine{to{background-position:300% 0}}
+.beat{display:inline-block;animation:beat 1.2s infinite}
+@keyframes beat{0%,100%{transform:scale(1)}20%{transform:scale(1.35)}40%{transform:scale(1)}60%{transform:scale(1.2)}}
+.txt{font-size:18px;line-height:1.7;min-height:80px;text-align:left;white-space:pre-wrap}
+.txt.c{text-align:center;font-size:21px}
+.cur::after{content:'|';animation:blink .8s infinite;color:var(--rose)}
+@keyframes blink{50%{opacity:0}}
+.btn{font-family:inherit;font-size:19px;color:#fff;border:0;border-radius:50px;padding:14px 30px;margin:10px 6px 0;cursor:pointer;background:linear-gradient(135deg,#ff4d8d,#c2185b);box-shadow:0 0 25px rgba(255,77,141,.7);opacity:0;transform:translateY(20px);transition:opacity 1s,transform 1s;position:relative;touch-action:manipulation}
+.btn.show{opacity:1;transform:translateY(0);animation:pulse 1.8s infinite}
+@keyframes pulse{50%{box-shadow:0 0 45px rgba(255,77,141,1)}}
+#yes{transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
+#no{background:linear-gradient(135deg,#555,#333);box-shadow:none;animation:none!important}
+#row{min-height:70px;display:flex;justify-content:center;align-items:center;flex-wrap:wrap}
+#music{text-decoration:none;position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);right:12px;z-index:5;background:rgba(255,255,255,.12);border:1px solid rgba(255,182,213,.4);color:#fff;border-radius:50px;padding:8px 14px;font-size:15px;cursor:pointer}
+#link{display:none;margin-top:14px;color:#ffb3d1;font-size:17px}
+#vid{position:fixed;left:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 12px);width:92px;height:128px;z-index:6;border-radius:18px;overflow:hidden;border:2px solid rgba(255,182,213,.7);box-shadow:0 0 25px rgba(255,77,141,.7);cursor:pointer;background:#000;transition:all .6s cubic-bezier(.3,1.3,.5,1);animation:pulse 2.4s infinite}
+#vid video{width:100%;height:100%;object-fit:cover;display:block}
+#vid.big{width:min(78vw,340px);height:min(60vh,440px);left:50%;bottom:50%;transform:translate(-50%,50%);animation:none;z-index:9}
+#vh{position:absolute;bottom:4px;left:0;right:0;text-align:center;font-size:11px;font-family:sans-serif;color:#fff;text-shadow:0 0 4px #000}
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<button id="music" aria-label="musiqi">🎵</button><audio id="song" src="music.mp3" loop preload="auto"></audio>
+
+<div class="page on" id="p1"><div class="card">
+<h1><span class="beat">❤️</span> Alinam <span class="beat">❤️</span></h1>
+<div class="txt" id="t1"></div>
+<button class="btn" id="b1">Davam et 💌</button>
+</div></div>
+
+<div class="page" id="p2"><div class="card">
+<div class="txt" id="t2"></div>
+<button class="btn" id="b2">Davam et 💖</button>
+</div></div>
+
+<div class="page" id="p3"><div class="card">
+<div class="txt c" id="t3"></div>
+<div id="row">
+<button class="btn" id="yes">Şans verirəm 💖</button>
+<button class="btn" id="no">Yoxdu şans</button>
+</div>
+<a id="link" target="_blank" rel="noopener">📱 WhatsApp açılmadısa bura toxun</a>
+</div></div>
+
+<div id="vid"><video id="vv" src="video.mp4" muted loop autoplay playsinline></video><span id="vh">▶ toxun</span></div>
+
+<script>
+// ====== BURANI DƏYİŞ: WhatsApp nömrən (ölkə kodu ilə, + və boşluqsuz). Məs: 994501234567 ======
+var PHONE = "994XXXXXXXXX";
+var MSG = "Salam sevgilim ❤️ Mesajını oxudum, sənə şans verirəm. Gəl danışaq, hər şeyi birlikdə düzəldək. Mən də səni çox sevirəm 🥹💖";
+
+var T = [
+"Alinam bu vaxta kimi çox səhvlər eləmişəm və çox peşmanam həddindən artıq çox peşmanam. Sənsiz yaşadığım günlər işgəncə olub mənə həmişə yazım demişəm ama elədiyim qələtdi də bilirdim. Sənə həyatım boyu yalan deməmişəm nə olubsa demişəm çünki aramızdakı güvənin itməsinə icazə verməzdim. Bu bir ildə çox qələtlər eləmişəm və çoxda peşmanam ama bildiyim tək şey səni dəli kimi sevdiyimdi.",
+"Keçən dəfə yazdım ama unutduğunu düşündüm həyatına girib xoşbəxtliyini bitirmək istəmədim. Sənin xoşbəxtliyin məndən daha vacibdi. Ama ağlımdan çıxmadın yazmayacaqdım heç vaxt yadına düşmək istəmirdim. Sonra bir hadisə oldu və səninlə ayrılmağımızın səbəbi əslində aramızda olan dava deyildi bu gün danışacaqdım sənə ona görə bir birimizi sevdiyimizi düşündüm və yazdım. Danışacam sənə hər şeyi sevgilim. Mən bir ildi sənin xəyallarınla yaşayıram səninlə yaşayıram. Bir saniyə belə səni unutmağa çalışmamışam çünki həyatımın ən xoşbəxt anlarını səninlə yaşamışam. İstəsəm də unuda bilməzdim onsuz. Mənim necə bir ruhsuz olduğumu bilirsən düşüncəsiz vecsiz vicdansız insanam ama məsələ sən olanda hər şey dəyişir özümdən asılı deyil təkcə sən olursan başqa heçnə.",
+"Səndən sadəcə şans istəyirəm hər şeyi düzəldəcəm çox xoşbəxt olasıyıq sənə söz verirəm. Məni sənsiz qoyma sevgilim."
+];
+
+function $(i){return document.getElementById(i)}
+
+// ---------- typewriter ----------
+var skip=false, typing=null;
+function type(el, text, done){
+  el.textContent=''; el.classList.add('cur'); var i=0; skip=false;
+  clearInterval(typing);
+  typing=setInterval(function(){
+    if(skip){i=text.length}
+    i++; el.textContent=text.slice(0,i);
+    el.parentNode.scrollTop=el.parentNode.scrollHeight;
+    if(i>=text.length){clearInterval(typing);el.classList.remove('cur');done&&done()}
+  }, 80);
+}
+['t1','t2','t3'].forEach(function(id){$(id).addEventListener('click',function(){skip=true})});
+
+function go(from,to,ti,after){
+  $(from).classList.remove('on');
+  setTimeout(function(){
+    $(to).classList.add('on'); burst(30);
+    setTimeout(function(){type($(ti),T[parseInt(ti[1])-1],after)},900);
+  },900);
+}
+type($('t1'),T[0],function(){$('b1').classList.add('show')});
+
+$('b1').onclick=function(){playSong();go('p1','p2','t2',function(){$('b2').classList.add('show')})};
+$('b2').onclick=function(){go('p2','p3','t3',function(){$('yes').classList.add('show');$('no').classList.add('show')})};
+
+// ---------- runaway no button ----------
+var n=0, noTexts=["Yoxdu şans","Əmin ol? 🥺","Bir də düşün 💔","Məni qıyma 😢","Zəhmət olmasa 🥹"];
+function run(e){
+  e.preventDefault(); e.stopPropagation(); n++;
+  var b=$('no'); b.style.position='fixed'; b.style.zIndex=10;
+  var w=b.offsetWidth,h=b.offsetHeight;
+  b.style.left=Math.random()*(innerWidth-w-20)+10+'px';
+  b.style.top=Math.random()*(innerHeight-h-80)+40+'px';
+  b.textContent=noTexts[n%noTexts.length];
+  $('yes').style.transform='scale('+Math.min(1+n*.22,3)+')';
+  $('yes').style.margin=(10+n*6)+'px '+(6+n*8)+'px 0';
+}
+$('no').addEventListener('pointerenter',run);
+$('no').addEventListener('pointerdown',run);
+$('no').addEventListener('touchstart',run,{passive:false});
+$('no').addEventListener('click',run);
+
+// ---------- yes ----------
+$('yes').onclick=function(){
+  burst(200); $('no').style.display='none';
+  $('t3').textContent='Təşəkkür edirəm sevgilim 🥹❤️ Səni heç vaxt pərt etməyəcəm...';
+  $('yes').style.transform='scale(1)';$('yes').style.margin='10px 6px 0';
+  $('yes').textContent='WhatsApp açılır 💌';
+  var url='https://wa.me/'+PHONE+'?text='+encodeURIComponent(MSG);
+  $('link').href=url; $('link').style.display='inline-block';
+  setTimeout(function(){ try{ window.open(url,'_blank') }catch(e){} },1500);
+};
+
+// ---------- background: stars + hearts + confetti ----------
+var cv=$('bg'),cx=cv.getContext('2d'),W,H,stars=[],hearts=[],conf=[];
+function rs(){W=cv.width=innerWidth;H=cv.height=innerHeight}
+rs();addEventListener('resize',rs);
+for(var i=0;i<110;i++)stars.push({x:Math.random(),y:Math.random(),r:Math.random()*1.6+.3,p:Math.random()*6});
+function heart(x,y,s,col,a){
+  cx.save();cx.translate(x,y);cx.scale(s,s);cx.globalAlpha=a;cx.fillStyle=col;cx.beginPath();
+  cx.moveTo(0,3);cx.bezierCurveTo(-6,-4,-14,3,0,14);cx.moveTo(0,3);cx.bezierCurveTo(6,-4,14,3,0,14);cx.fill();cx.restore();
+}
+function spawn(){hearts.push({x:Math.random()*W,y:H+20,s:Math.random()*1.4+.5,v:Math.random()*1+.5,w:Math.random()*2,a:Math.random()*.5+.3,c:['#ff4d8d','#ff9ac1','#ffd6e7','#e91e63'][Math.floor(Math.random()*4)]})}
+function burst(k){for(var i=0;i<k;i++){var a=Math.random()*6.28,v=Math.random()*7+2;conf.push({x:W/2,y:H/2,vx:Math.cos(a)*v,vy:Math.sin(a)*v-3,s:Math.random()*1.2+.6,l:1,c:['#ff4d8d','#ffd6e7','#ff9ac1','#fff'][Math.floor(Math.random()*4)]})}}
+var t=0;
+(function loop(){
+  t+=.02;cx.clearRect(0,0,W,H);
+  stars.forEach(function(s){cx.globalAlpha=.4+.6*Math.abs(Math.sin(t+s.p));cx.fillStyle='#fff';cx.beginPath();cx.arc(s.x*W,s.y*H,s.r,0,6.28);cx.fill()});
+  if(Math.random()<.12)spawn();
+  hearts=hearts.filter(function(h){h.y-=h.v;h.x+=Math.sin(t*2+h.w)*.6;heart(h.x,h.y,h.s,h.c,h.a);return h.y>-30});
+  conf=conf.filter(function(c){c.x+=c.vx;c.y+=c.vy;c.vy+=.12;c.l-=.008;heart(c.x,c.y,c.s,c.c,Math.max(c.l,0));return c.l>0});
+  requestAnimationFrame(loop);
+})();
+
+// ---------- music (music.mp3 faylı) ----------
+var song=$('song'),playing=false;
+function playSong(){var p=song.play();if(p&&p.then)p.then(function(){playing=true;$('music').textContent='🎵'}).catch(function(){})}
+['pointerdown','touchstart','keydown'].forEach(function(ev){addEventListener(ev,function f(){playSong();removeEventListener(ev,f)},{passive:true})});
+$('music').onclick=function(e){e.stopPropagation();if(song.paused){playSong()}else{song.pause();playing=false;$('music').textContent='🔇'}};
+
+// ---------- video (video.mp4 faylı) ----------
+var vid=$('vid'),vv=$('vv');
+vv.addEventListener('error',function(){vid.style.display='none'});
+vid.onclick=function(e){
+  e.stopPropagation();
+  var big=vid.classList.toggle('big');
+  vv.muted=!big; vv.currentTime=big?0:vv.currentTime;
+  $('vh').style.display=big?'none':'block';
+  if(big){song.pause()}else{playSong()}
+  vv.play();
+};
+</script>
+</body>
+</html>
